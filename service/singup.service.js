@@ -1,9 +1,10 @@
 const SignUpRepository = require('../repository/signup.repository');
 const { ValidationError } = require('../exceptions/index.exception');
+const { users } = require('../models');
 
 class SignUpService {
   constructor() {
-    this.signUpRepository = new SignUpRepository();
+    this.signUpRepository = new SignUpRepository(users);
   }
 
   findUser = async ({ nickname }) => {

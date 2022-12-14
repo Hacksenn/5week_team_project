@@ -1,9 +1,10 @@
 // services/posts.services.js
 
-const PostRepository = require("../repository/posts.repository");
+const PostRepository = require('../repository/posts.repository');
+const { posts } = require('../models');
 
 class PostService {
-  postRepository = new PostRepository();
+  postRepository = new PostRepository(posts);
 
   findAllPost = async () => {
     const allPost = await this.postRepository.findAllPost();

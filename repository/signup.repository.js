@@ -1,8 +1,6 @@
-const { users } = require('../models');
-
 class SignUpRepository {
-  constructor() {
-    this.User = users;
+  constructor(usersModel) {
+    this.User = usersModel;
   }
   findUser = async ({ nickname }) => {
     const user = await this.User.findOne({ where: { nickname } });
