@@ -1,15 +1,28 @@
-const PostService = require("../service/posts.service");
+const PostService = require('../service/posts.service');
 
 class PostsController {
   postService = new PostService();
 
   //게시글 생성
   createPost = async (req, res, next) => {
-    const { userId, nickname } = res.locals.user;
-    const { title, content } = req.body;
-    console.log(userId, nickname, title, content);
-    await this.postService.createPost(userId, nickname, title, content);
-    res.status(200).send({ message: "게시글을 생성하였습니다." });
+    try {
+      const { userId, nickname } = res.locals.user;
+      const { title, content } = req.body;
+
+      if (!title || !content || !userId || !nickname) {
+        throw new Error('InvalidParamsError');
+      }
+
+      const createPostData = await this.postService.createPost(
+        userId,
+        nickname,
+        title,
+        content
+      );
+      res.status(201).json({ data: createPostData });
+    } catch (error) {
+      res.status(400).json({ errorMessage: error.message });
+    }
   };
 
   //게시글 조회
